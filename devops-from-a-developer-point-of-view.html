@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>reveal.js</title>
+
+    <link rel="stylesheet" href="dist/reset.css" />
+    <link rel="stylesheet" href="dist/reveal.css" />
+    <link rel="stylesheet" href="dist/theme/moon.css" id="theme" />
+
+    <!-- Theme used for syntax highlighted code -->
+    <link
+      rel="stylesheet"
+      href="plugin/highlight/monokai.css"
+      id="highlight-theme"
+    />
+
+    <style>
+      .reveal li {
+        font-size: 0.8em;
+        margin-bottom: 15px;
+      }
+
+      .reveal .fragment {
+        margin-bottom: 15px;
+      }
+
+      .links {
+        font-size: 0.6em;
+      }
+
+      .links > div {
+        margin-bottom: 18px;
+      }
+
+      .subtitle {
+        font-size: 0.6em;
+        margin-bottom: 36px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section data-transition="convex">
+          <h3>Devops From a Developer Point of View</h3>
+
+          <div class="subtitle">as pondered by Mark Jubenville, 2021-02-18</div>
+
+          <aside class="notes">
+            Preamble time!
+            <ul>
+              <li>
+                Hi everyone, for those that don't know me I'm Mark and I'm a
+                Staff Web Developer. I joined ecobee a little over 2 years ago
+                where I started off on the SmartBuildings team. And just
+                recently I've moved over to the Zeus team.
+              </li>
+
+              <li>first time I've done this presentation</li>
+
+              <li>
+                most of the thoughts in here are from notes taken while I was
+                doing development
+              </li>
+
+              <li>feel free to ask any questions at any time</li>
+
+              <li>
+                Why are these slides using reveal.js and not powerpoint? I sort
+                of detest powerpoint. Mainly from my previous life as a graphics
+                designer / prepress operator where clients would send files
+                "designed" in powerpoint and expect them to print well.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section data-transition="convex">
+          <h3>Talking Points</h3>
+
+          <ul>
+            <li>What do I think of as devops?</li>
+
+            <li>Why should developers care?</li>
+
+            <li>
+              Will any of this help me as a developer, or is it just more work
+              for me to do?
+            </li>
+
+            <li>
+              What kinds of things do I think about most when coding that relate
+              to devops?
+            </li>
+          </ul>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                I think there are a multitude of things that can affect a
+                developer when talking about devops, but these are the things I
+                thought I'd go over a bit today
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section data-transition="convex">
+          <h3>What do I think of as devops?</h3>
+
+          <div class="fragment fade-in">
+            What do others consider to be devops?
+          </div>
+
+          <div class="fragment fade-in">
+            But what do I consider to be devops?
+          </div>
+
+          <div class="fragment fade-in">
+            Sounds familiar, does this fit with Agile?
+          </div>
+
+          <div class="fragment fade-in">
+            Is devops even being done at ecobee?
+          </div>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                a very brief view of the devops model is generally considered to
+                be operations and development working closely together
+                throughout the product development process<br /><br />
+
+                note: this isn't describing the role of a devops engineer, it's
+                more about the devops process
+              </li>
+
+              <li>
+                my version, and how I really think about devops, is that it's
+                not just operations and development working closely together,
+                it's operations, development, quality assurance and security all
+                working closely together or even better all on the same team
+              </li>
+
+              <li>
+                this can be very relatable to Agile; certainly one brand of
+                agile says that ideally a team should have members on it for all
+                tasks and skills required to successfully deliver a product<br /><br />
+
+                note: there should still be other members and roles on a team of
+                course, but these are the ones that broadly fit into the devops
+                model
+              </li>
+
+              <li>
+                going by this, most of us here are doing some form devops now<br /><br />
+
+                any team with QA & engineers together could already be
+                considered as part of a devops model<br /><br />
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section data-transition="convex">
+          <h3>Why should developers care?</h3>
+
+          <div class="fragment fade-in">Automation</div>
+
+          <div class="fragment fade-in">Observability</div>
+
+          <div class="fragment fade-in">Reliability</div>
+
+          <aside class="notes">
+            <ul>
+              <li>not an exhaustive list!</li>
+
+              <li>
+                but these are the ones that resonate with me the most, where
+                I've had the most pain points in the past
+              </li>
+
+              <li>
+                to some extent, all of these things are already done at ecobee,
+                but are maybe taken for granted
+              </li>
+
+              <li>
+                but they are all things that quite often devs will think of as
+                outside of their scope or control
+              </li>
+
+              <li>
+                automation<br /><br />
+
+                what does it get: faster releases, faster dev feedback cycle,
+                faster testing anecdote on manual process: back at in the olden
+                days, deployments were frequently done manually... I've worked
+                in environments where they were done by scp'ing files to a
+                production server, or by logging into a production server and
+                running `git pull` and then restarting a service<br /><br />
+              </li>
+
+              <li>
+                observability<br /><br />
+
+                monitoring: once code is released, that's not the end step for a
+                developer, being able to monitor the status of your deployed
+                application is necessary<br /><br />
+
+                debugging: ever try debugging something and wishing you had more
+                access to logs that you don't directly control? for instance web
+                server logs, database logs, file system logs<br /><br />
+
+                the devops model, where ops is either integrated with your team
+                or conversing on a daily basis helps with all these things<br /><br />
+              </li>
+
+              <li>
+                reliability<br /><br />
+
+                anecdote on testing: for a while one company I worked with had a
+                single QA team, they would write out test cases for each dev
+                team, the backlog of them was long, and their backlog of
+                executing the tests was even longer<br /><br />
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section data-transition="convex">
+          <h3>
+            Will any of this actually help me as a developer, or is it just more
+            work for me to do?
+          </h3>
+
+          <div class="fragment fade-in">Less repetitive and/or manual work</div>
+
+          <div class="fragment fade-in">Less repetitive and/or manual work</div>
+
+          <div class="fragment fade-in" style="font-size: 0.75em">
+            <em>insert laugh track here</em>
+          </div>
+
+          <div class="fragment fade-in">
+            More knowledge outside of just coding will<br />probably be required
+          </div>
+
+          <div class="fragment fade-in" style="font-size: 0.5em">
+            <div>Examples:</div>
+            <div style="font-size: 0.75em; line-height: 1.45em">
+              <div>terraform configuration</div>
+              <div>continuous integration</div>
+              <div>monitoring</div>
+            </div>
+          </div>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                not more work, but hopefully more focused work, less manual work
+              </li>
+
+              <li>
+                the trade off is needing to know more about things that were
+                previously ops-related only<br /><br />
+
+                for instance: terraform, CI system, eg, circle ci, grafana,
+                honeycomb, cloud logs, etc.
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section data-transition="convex">
+          <h3>
+            What kinds of things do I think about most when coding that relate
+            to devops?
+          </h3>
+
+          <div class="fragment fade-in">
+            <div>Configuration</div>
+          </div>
+
+          <div class="fragment fade-in" style="font-size: 0.5em">
+            <div class="fragment shrink">
+              <div>Environment Variables</div>
+              <div>Terraform</div>
+              <div>Hardware Requirements</div>
+              <div>Access and Connectivity</div>
+            </div>
+          </div>
+
+          <div class="fragment fade-in">Testability</div>
+
+          <div class="fragment fade-in" style="font-size: 0.5em">
+            <div class="fragment shrink">
+              <div>
+                Is it even possible to test this feature/change in staging?
+                production?
+              </div>
+
+              <div>
+                Is there a way I could write it so that's it's more easily
+                testable?
+              </div>
+            </div>
+          </div>
+
+          <div class="fragment fade-in">Observability</div>
+
+          <div class="fragment fade-in" style="font-size: 0.5em">
+            <div class="fragment shrink">
+              <div>What information can I provide?</div>
+
+              <div>How can I make this information understandable?</div>
+            </div>
+          </div>
+
+          <aside class="notes">
+            <ul>
+              <li>
+                configuration:<br /><br />
+
+                these are things that earlier in my career I probably just
+                assumed someone else would take care of, and that I wouldn't
+                really need to think about<br /><br />
+
+                env vars<br /><br />
+                terraform<br /><br />
+                hardware requirements<br /><br />
+                access and connectivity, eg, ports, authentication<br /><br />
+              </li>
+
+              <li>
+                testability:<br /><br />
+
+                is it even possible to test this feature/change in staging?
+                production?<br /><br />
+
+                is there a way I could write it so that's it's more easily
+                testable<br /><br />
+              </li>
+
+              <li>
+                observability:<br /><br />
+
+                this can be logging, or tracing, or monitoring, or any other
+                feedback method from a deployed application<br />
+
+                what information would I need if I wanted to debug an issues<br /><br />
+
+                how can I make this information understandable by more than just
+                a developer, eg, ops, qa, product?<br /><br />
+              </li>
+            </ul>
+          </aside>
+        </section>
+
+        <section data-transition="convex">
+          <h3>Some devops info!</h3>
+
+          <div class="subtitle">
+            Just a few of the links I found helpful when doing some research on
+            devops.
+          </div>
+
+          <div class="links">
+            <div>
+              Devops according to Amazon -
+              <a href="https://aws.amazon.com/devops/what-is-devops">
+                https://aws.amazon.com/devops/what-is-devops
+              </a>
+            </div>
+
+            <div>
+              Devops according to Google -
+              <a href="https://cloud.google.com/devops">
+                https://cloud.google.com/devops
+              </a>
+              - this one is fairly in depth
+            </div>
+
+            <div>
+              Devops according to New Relic -
+              <a href="https://newrelic.com/devops/what-is-devops">
+                https://newrelic.com/devops/what-is-devops
+              </a>
+              - New Relic has put out a lot of really good articles on various
+              subjects
+            </div>
+          </div>
+        </section>
+
+        <section data-transition="convex">
+          <h3>Finally</h3>
+
+          <div>For more info on devops at ecobee, come join us on Slack</div>
+
+          <pre
+            style="text-align: center"
+          ><code data-trim data-noescape>#guild-devops</code></pre>
+
+          <div>Or visit our confluence space</div>
+
+          <a
+            style="font-size: 0.8em"
+            href="https://ecobee.atlassian.net/wiki/spaces/AGILE/pages/970949387/Guild+DevOps"
+            >https://ecobee.atlassian.net/wiki/spaces/AGILE/pages/970949387/Guild+DevOps</a
+          >
+        </section>
+      </div>
+    </div>
+
+    <script src="dist/reveal.js"></script>
+    <script src="plugin/notes/notes.js"></script>
+    <script src="plugin/markdown/markdown.js"></script>
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      // More info about initialization & config:
+      // - https://revealjs.com/initialization/
+      // - https://revealjs.com/config/
+      Reveal.initialize({
+        hash: true,
+
+        // Learn about plugins: https://revealjs.com/plugins/
+        plugins: [RevealMarkdown, RevealHighlight, RevealNotes],
+        slideNumber: "c/t",
+      });
+    </script>
+  </body>
+</html>
